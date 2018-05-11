@@ -1,0 +1,3 @@
+ssh-key-directory/*.pem
+ssh-key-directory/*.tmp
+environment.list
