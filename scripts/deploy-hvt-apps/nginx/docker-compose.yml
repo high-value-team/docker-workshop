@@ -1,0 +1,10 @@
+version: '2'
+services:
+  nginx:
+    image: nginx
+    stdin_open: true
+    tty: true
+    ports:
+    - 8181:80/tcp
+    labels:
+      io.rancher.container.pull_image: always

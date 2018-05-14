@@ -1,0 +1,18 @@
+version: '2'
+services:
+  backend:
+    image: hvt1/totalorder-backend
+    environment:
+      TOTALORDER_BACKEND_DATABASEPATH: mnt
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
+  frontend:
+    image: hvt1/totalorder-frontend
+    environment:
+      REACT_APP_BACKEND_URL: http://totalorder-backend.hvt.zone
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always
