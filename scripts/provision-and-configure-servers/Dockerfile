@@ -10,12 +10,17 @@ RUN apk add --no-cache python3 && \
 
 RUN apk update && apk add openssh
 
-ADD aws /aws
-RUN rm -rf /aws/venv # ignore 'venv' directory
+ADD . /data
+RUN rm -rf /data/venv # ignore 'venv' directory
 
-WORKDIR /aws
+WORKDIR /data
+
 RUN pip install -r requirements.txt
 
-VOLUME ["/ssh-key-directory"]
+RUN chmod 400 id_rsa.pem
+RUN chmod +x run.sh
 
-CMD python main.py --ssh-key /ssh-key-directory/id_rsa.pem
+ENTRYPOINT sh run.sh
+
+
+

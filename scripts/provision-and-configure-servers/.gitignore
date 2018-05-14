@@ -1,3 +1,10 @@
+run.sh
+id_rsa.pem
+
+#
+# only python stuff below:
+#
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

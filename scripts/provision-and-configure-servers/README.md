@@ -4,31 +4,26 @@ This script will setup a rancher environment on aws.
 
 ### perpare
 
-copy ssh key to ssh-key-directory
-```
-cp ~/.ssh/aws-ssh-key.pem ssh-key-directory/id_rsa.pem
-```
-
 edit environment variables
 ```
-cp environment.example enviroment.list
-vi environment.list
+cp run.example run.sh
+vi run.sh
 ```
 
-```
-# build docker image
-docker build --tag docker-workshop .
-```
+### execute scripts
 
 ```
-# start container (detached)
-docker run -d --env-file environment.list  --volume (pwd)/ssh-key-directory:/ssh-key-directory docker-workshop
-6b78caba67c784047037e4d56e9f6159c3dc077f4ae36f09274f40cb25bd0f6d
-
-# follow logs (give it some time to display some output)
-docker logs -f 6b78caba67c784047037e4d56e9f6159c3dc077f4ae36f09274f40cb25bd0f6d
+docker build --tag provision-and-configure-servers .
+docker run -rm provision-and-configure-servers
 ```
 
+
+### Technologies
+
+* Python (boto3, pexpect)
+* AWS (aws CLI, EC2, Route53)
+* Docker (RancherOS, Rancher 1.6, Rancher CLI)
+* Drone (Drone CLI)
 
 ### source
 
@@ -48,3 +43,14 @@ python libraries:
 
 inspiration:
 * https://github.com/jeff1evesque/machine-learning/blob/508f572357966d621026ff144731a29c6faed939/install_rancher
+* https://gist.github.com/mathuin/ed0fa5666e4f063b94abb5b1a49d9919
+* http://tleyden.github.io/blog/2016/02/15/setting-up-a-self-hosted-drone-dot-io-ci-server/
+
+automate drone setup
+* https://github.com/drone/drone/issues/2129
+
+drone:
+* http://docs.drone.io/cli-installation/
+
+rancher:
+* https://rancher.com/docs/rancher/v1.6/en/cli/commands/

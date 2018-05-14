@@ -2,43 +2,10 @@ import time
 import inspect
 import sys
 import os
-from pathlib import Path
-import getopt
-import shutil
 
 import boto3
 import pexpect
 import requests
-
-
-#
-# parse args
-#
-
-try:
-    options, remainder = getopt.getopt(sys.argv[1:], '', ['ssh-key='])
-except getopt.GetoptError as err:
-    print('ERROR:', err)
-    sys.exit(1)
-
-for opt, arg in options:
-    if opt == '--ssh-key':
-        sshKey = arg
-
-if not sshKey:
-    raise Exception("please provide '--ssh-key' parameter")
-
-if not Path(sshKey).exists():
-    raise Exception('file does not exist: ' + sshKey)
-
-# create temporary file and change file permissions
-sshKeyPath = os.path.abspath(sshKey)
-tmpSshKeyPath = os.path.join(os.path.dirname(sshKeyPath), os.path.basename(sshKeyPath) + '.' + str(time.time()) + '.tmp')
-
-shutil.copy2(sshKeyPath, tmpSshKeyPath)
-os.chmod(tmpSshKeyPath, 0o400)
-
-AWS_SSH_KEY_PATH = tmpSshKeyPath
 
 #
 # parse ENV
@@ -55,6 +22,7 @@ AWS_SECRET_ACCESS_KEY = env_must_exist('AWS_SECRET_ACCESS_KEY')
 AWS_HOSTED_ZONE_ID =    str(os.environ['AWS_HOSTED_ZONE_ID'])
 AWS_DNS_NAME =          env_must_exist('AWS_DNS_NAME')
 AWS_SSH_KEY_NAME =      env_must_exist('AWS_SSH_KEY_NAME')
+AWS_SSH_KEY_PATH =      env_must_exist('AWS_SSH_KEY_PATH')
 AWS_IMAGE_ID =          env_must_exist('AWS_IMAGE_ID')
 AWS_SECURITY_GROUP_ID = env_must_exist('AWS_SECURITY_GROUP_ID')
 NUMBER_OF_HOSTS =       env_must_exist('NUMBER_OF_HOSTS')
@@ -310,6 +278,20 @@ def get_registration_token(publicIpAddress):
 
     return token
 
+def generate_api_key(publicIpAddress):
+    print_function_name()
+
+    response = requests.request('POST',
+                                url='http://' + publicIpAddress + ':8080/v1/projects/1a5/apikeys',
+                                headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+                                data='{"accountId": "a1", "publicValue": "publicKey", "secretValue": "secretKey"}')
+    print(response.json())
+    rancher_access_key = response.json()['publicValue']
+    rancher_secret_key = response.json()['secretValue']
+    print('rancher_access_key:'+rancher_access_key)
+    print('rancher_secret_key:'+rancher_secret_key)
+    return [rancher_access_key, rancher_secret_key]
+
 def install_rancher_host(hostIp, serverIp, port, registrationToken):
     print_function_name()
 
@@ -347,6 +329,7 @@ wait_for_ssh_available(serverIp)
 wait_for_docker_is_alive(serverIp)
 install_rancher_server(serverIp)
 registrationToken = get_registration_token(serverIp)
+rancher_access_key, rancher_secret_key = generate_api_key(serverIp)
 install_rancher_host(serverIp, serverIp, "8080", registrationToken)
 if AWS_HOSTED_ZONE_ID:
     update_dns_record(serverIp, AWS_DNS_NAME)                # 'hvt.zone.'
@@ -365,3 +348,10 @@ for host in generate_hosts():
     wait_for_ssh_available(hostIp)
     wait_for_docker_is_alive(hostIp)
     install_rancher_host(hostIp, serverIp, "8080", registrationToken)
+
+
+# results
+print('/n')
+print('export RANCHER_URL=http://' + serverIp + ':8080')
+print('export RANCHER_ACCESS_KEY=' + rancher_access_key)
+print('export RANCHER_SECRET_KEY=' + rancher_secret_key)
