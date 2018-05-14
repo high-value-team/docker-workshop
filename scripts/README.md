@@ -1,31 +1,73 @@
-# scripts to provision AWS
+# Setup HVT Environment on AWS
+
+Description TODO
+
+
+## scripts to provision AWS
 
 This script will setup a rancher environment on aws.
 
-### perpare
-
-edit environment variables
 ```
+cd provision-and-configure-servers
+
+# configure provide credentials, secrets, passwords, usernames, ...
 cp run.example run.sh
 vi run.sh
-```
 
-### execute scripts
+# copy aws ssh-key
+cp ~/.ssh/frankfurt-rancher.pem id_rsa.pem
 
-```
+# build and execute scripts
 docker build --tag provision-and-configure-servers .
 docker run -rm provision-and-configure-servers
 ```
 
 
-### Technologies
+## deploy rancher stacks
+
+Description TODO
+
+```
+cd deploy-hvt-apps
+
+# configure provide credentials, secrets, passwords, usernames, ...
+cp run.example run.sh
+vi run.sh
+
+# build and execute scripts
+docker build --tag deploy-hvt-apps .
+docker run -rm deploy-hvt-apps
+```
+
+
+## configure drone ci
+
+Description TODO
+
+visit http://drone.hvt.zone/account/token to get DRONE_TOKEN
+
+```
+cd configure-drone-ci
+
+# configure provide credentials, secrets, passwords, usernames, ...
+cp run.example run.sh
+vi run.sh
+
+# build and execute scripts
+docker build --tag configure-drone-ci .
+docker run -rm configure-drone-ci
+```
+
+
+
+## Technologies
 
 * Python (boto3, pexpect)
 * AWS (aws CLI, EC2, Route53)
 * Docker (RancherOS, Rancher 1.6, Rancher CLI)
 * Drone (Drone CLI)
 
-### source
+## source
 
 project structure:
 * https://www.kennethreitz.org/essays/repository-structure-and-python
@@ -54,3 +96,4 @@ drone:
 
 rancher:
 * https://rancher.com/docs/rancher/v1.6/en/cli/commands/
+
