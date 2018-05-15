@@ -25,7 +25,10 @@ AWS_SSH_KEY_NAME =      env_must_exist('AWS_SSH_KEY_NAME')
 AWS_SSH_KEY_PATH =      env_must_exist('AWS_SSH_KEY_PATH')
 AWS_IMAGE_ID =          env_must_exist('AWS_IMAGE_ID')
 AWS_SECURITY_GROUP_ID = env_must_exist('AWS_SECURITY_GROUP_ID')
+RANCHER_USERNAME =      env_must_exist('RANCHER_USERNAME')
+RANCHER_PASSWORD =      env_must_exist('RANCHER_PASSWORD')
 NUMBER_OF_HOSTS =       env_must_exist('NUMBER_OF_HOSTS')
+
 
 print('AWS_REGION_NAME=' + AWS_REGION_NAME)
 print('AWS_ACCESS_KEY_ID=' + AWS_ACCESS_KEY_ID)
@@ -36,6 +39,8 @@ print('AWS_SSH_KEY_NAME=' + AWS_SSH_KEY_NAME)
 print('AWS_SSH_KEY_PATH=' + AWS_SSH_KEY_PATH)
 print('AWS_IMAGE_ID=' + AWS_IMAGE_ID)
 print('AWS_SECURITY_GROUP_ID=' + AWS_SECURITY_GROUP_ID)
+print('RANCHER_USERNAME=' + RANCHER_USERNAME)
+print('RANCHER_PASSWORD=' + RANCHER_PASSWORD)
 print('NUMBER_OF_HOSTS=' + NUMBER_OF_HOSTS)
 
 
@@ -292,6 +297,15 @@ def generate_api_key(publicIpAddress):
     print('rancher_secret_key:'+rancher_secret_key)
     return [rancher_access_key, rancher_secret_key]
 
+def enable_rancher_access_control(publicIpAddress, username, password):
+    print_function_name()
+
+    response = requests.request('POST',
+                                url='http://' + publicIpAddress + ':8080/v1/localauthconfig',
+                                headers={'Accept': 'application/json', 'Content-Type': 'application/json'},
+                                data='{"accessMode": "unrestricted", "enabled": true, "name": "admin", "username": "' + username + '", "password": "' + password + '"}')
+    print(response.json())
+
 def install_rancher_host(hostIp, serverIp, port, registrationToken):
     print_function_name()
 
@@ -330,6 +344,7 @@ wait_for_docker_is_alive(serverIp)
 install_rancher_server(serverIp)
 registrationToken = get_registration_token(serverIp)
 rancher_access_key, rancher_secret_key = generate_api_key(serverIp)
+enable_rancher_access_control(serverIp, RANCHER_USERNAME, RANCHER_PASSWORD)
 install_rancher_host(serverIp, serverIp, "8080", registrationToken)
 if AWS_HOSTED_ZONE_ID:
     update_dns_record(serverIp, AWS_DNS_NAME)                # 'hvt.zone.'
@@ -351,7 +366,7 @@ for host in generate_hosts():
 
 
 # results
-print('/n')
+print('\n')
 print('export RANCHER_URL=http://' + serverIp + ':8080')
 print('export RANCHER_ACCESS_KEY=' + rancher_access_key)
 print('export RANCHER_SECRET_KEY=' + rancher_secret_key)

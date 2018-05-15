@@ -11,6 +11,8 @@ export AWS_SSH_KEY_NAME=frankfurt-rancher
 export AWS_SSH_KEY_PATH=id_rsa.pem # copy ssh-key into this directory
 export AWS_IMAGE_ID=ami-28422647
 export AWS_SECURITY_GROUP_ID=sg-a83164c5
+export RANCHER_USERNAME=admin
+export RANCHER_PASSWORD=admin
 export NUMBER_OF_HOSTS=0
 
 python main.py
