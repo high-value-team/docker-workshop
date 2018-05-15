@@ -1,9 +1,5 @@
 # Setting up Rancher v1.6 on AWS (fully scripted)
 
-
-![rancher-architecture](images/rancher-architecture.png)
-description:
-
 Want to get started with a simple administration frontend for your Docker containers? Do you want to give a small introduction to Docker and demonstrate its practical use with a web UI?
 
 This document will guide you through an automated initial setup so that you can spin up an environment for the next workshop.
@@ -16,6 +12,10 @@ features:
 bonus features:
 * deploy your docker containers to rancher
 * install and configure drone.io CI Server
+
+
+![rancher-architecture](images/rancher-architecture.png)
+description:
 
 
 ## Table of Content
