@@ -2,7 +2,7 @@
 
 Want to get started with a simple administration frontend for your Docker containers? Do you want to give a small introduction to Docker and demonstrate its practical use with a web UI?
 
-This document will guide you through an automated initial setup so that you can spin up an environment for the next workshop.
+This document will guide you through an automated setup so that you can spin up an environment for the next workshop.
 
 features:
 * provision and configure EC2 instances
@@ -20,16 +20,16 @@ description:
 
 ## Table of Content
 
-* [What is rancher?](#What is rancher?)
-* [Configure AWS](#Configure AWS)
-* [Execute Scripts (dockerized)](#Execute Scripts (dockerized))
-* [Bonus Features](#Bonus Features)
-* [Closing Notes](#Closing Notes)
+* [What-is-rancher](#What-is-rancher)
+* [Configure-AWS](#Configure-AWS)
+* [Execute-Scripts](#Execute-Scripts)
+* [Bonus-Features](#Bonus-Features)
+* [Closing-Notes](#Closing-Notes)
 * [Technologies](#Technologies)
 * [sources](#sources)
 
 
-## What is rancher?
+## What-is-rancher
 
 Rancher is an orchestration plattform that manages your multi-container Docker applications. Rancher extends the default docker-compose.yml functionality with an additional file called rancher-compose.yml (scaling, healthchecks, loadbalancing).
 
@@ -52,13 +52,13 @@ description:
 description:
 
 
-## Configure AWS
+## Configure-AWS
 
 AWS users, permissions, credentials, security groups, ssh keys
 
 Before we can get up and running with our scripts, we need to go to AWS via the web console and create a user, give the user permissions to interact with specific services, and get credentials to identify that user. EC2 instances also need security groups to restrict TCP traffic and to log into the new created instances we will be using ssh-keys which also need to be generated.
 
-### Create IAM User
+### Create-IAM-User
 
 Open your browser and navigate to the AWS login page https://console.aws.amazon.com/console/home.
 
@@ -98,7 +98,7 @@ description:
 description:
 
 
-## Execute Scripts (dockerized)
+## Execute-Scripts
 
 
 ```
@@ -129,7 +129,7 @@ description:
 ![aws-provision-done](images/aws-provision-done.png)
 description:
 
-## Bonus Features
+## Bonus-Features
 
 ### deploy your docker containers to rancher 
 
@@ -165,7 +165,7 @@ docker build --tag configure-drone-ci .
 docker run configure-drone-ci
 ```
 
-## Closing Notes
+## Closing-Notes
 
 (pay attention to your credentials, secure your AWS instances)
 
