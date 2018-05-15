@@ -14,7 +14,7 @@ bonus features:
 * install and configure drone.io CI Server
 
 
-![rancher-architecture](images/rancher-architecture.png)
+![rancher-architecture2](images/rancher-architecture2.png)
 description:
 
 
