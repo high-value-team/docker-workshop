@@ -62,8 +62,7 @@ def create_instance(instanceType):
     instances = ec2.create_instances(ImageId=AWS_IMAGE_ID,
                                      BlockDeviceMappings=[{"DeviceName": "/dev/sda1", "Ebs": {"VolumeSize": 50}}],
                                      InstanceType=instanceType,
-                                     # KeyName=AWS_SSH_KEY_NAME,
-                                     KeyName='frankfurt-rancher',
+                                     KeyName=AWS_SSH_KEY_NAME,
                                      SecurityGroupIds=[AWS_SECURITY_GROUP_ID],
                                      MinCount=1,
                                      MaxCount=1)
