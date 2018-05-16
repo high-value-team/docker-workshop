@@ -4,22 +4,19 @@ services:
     image: hvt1/groupbox-backend
     environment:
       HTTP_PORT: '80'
-      MONGODB_URL: mongodb://groupbox:Group!Box2017@ds121565.mlab.com:21565/develop
-      SMTP_NO_REPLY_EMAIL: no-reply-groupbox@ralfw.de
-      SMTP_SERVER_ADDRESS: sslout.df.eu:587
-      SMTP_USERNAME: groupbox@ralfw.de
-      SMTP_PASSWORD: Group!Box2017
+      MONGODB_URL: mongodb://mongo:27017
       GROUPBOX_ROOT_URI: https://groupbox.hvt.zone
+#      # backend still works even if SMTP is not configured
+#      - SMTP_NO_REPLY_EMAIL=no-reply-groupbox@ralfw.de
+#      - SMTP_SERVER_ADDRESS=sslout.df.eu:587
+#      - SMTP_USERNAME=TODO
+#      - SMTP_PASSWORD=TODO
     stdin_open: true
     tty: true
     labels:
       io.rancher.container.pull_image: always
-  mongodb:
-    image: tutum/mongodb
-    environment:
-      MONGODB_USER: groupbox
-      MONGODB_DATABASE: develop
-      MONGODB_PASS: Group!Box2017
+  mongo:
+    image: mongo
     stdin_open: true
     tty: true
     labels:

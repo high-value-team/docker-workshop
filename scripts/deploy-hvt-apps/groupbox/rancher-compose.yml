@@ -3,7 +3,7 @@ services:
   backend:
     scale: 1
     start_on_create: true
-  mongodb:
+  mongo:
     scale: 1
     start_on_create: true
   frontend:
