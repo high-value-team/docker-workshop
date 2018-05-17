@@ -185,6 +185,9 @@ drone-menu-token: Click on the burger menu in the upper right hand corner and se
 ![drone-token](images/drone-token.png)
 drone-token: Copy and paste the environment variable DRONE_TOKEN into run.sh (see details steps on the console below)
 
+![drone-jobs](images/drone-jobs.png)
+drone-jobs: Pipelines to finish may take so time (e.g. 20minutes)
+
 ```
 cd configure-drone-ci
 

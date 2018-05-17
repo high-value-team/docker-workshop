@@ -31,3 +31,19 @@ drone secret add -repository $REPOSITORY -name docker_username -value $DOCKER_US
 drone secret add -repository $REPOSITORY -name docker_password -value $DOCKER_PASSWORD
 drone secret add -repository $REPOSITORY -name rancher_access_key -value $RANCHER_ACCESS_KEY
 drone secret add -repository $REPOSITORY -name rancher_secret_key -value $RANCHER_SECRET_KEY
+
+echo
+export REPOSITORY=high-value-team/totalorder
+drone repo add $REPOSITORY
+drone secret add -repository $REPOSITORY -name docker_username -value $DOCKER_USERNAME
+drone secret add -repository $REPOSITORY -name docker_password -value $DOCKER_PASSWORD
+drone secret add -repository $REPOSITORY -name rancher_access_key -value $RANCHER_ACCESS_KEY
+drone secret add -repository $REPOSITORY -name rancher_secret_key -value $RANCHER_SECRET_KEY
+
+echo
+export REPOSITORY=high-value-team/groupbox
+drone repo add $REPOSITORY
+drone secret add -repository $REPOSITORY -name docker_username -value $DOCKER_USERNAME
+drone secret add -repository $REPOSITORY -name docker_password -value $DOCKER_PASSWORD
+drone secret add -repository $REPOSITORY -name rancher_access_key -value $RANCHER_ACCESS_KEY
+drone secret add -repository $REPOSITORY -name rancher_secret_key -value $RANCHER_SECRET_KEY
