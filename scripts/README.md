@@ -1,6 +1,6 @@
 # Setting up Rancher v1.6 on AWS (fully scripted)
 
-Do you want to get started with a simple administration frontend for your Docker containers? Want to give a small introduction to Docker and demonstrate its practical use with a web UI? It takes you 5 minutes to get everything up and running.
+Do you want to get started with a simple administration frontend for your Docker containers? Want to give a small introduction to Docker and demonstrate its practical use with a web UI? It takes 5 minutes to get everything up and running.
 
 This document will guide you through an automated setup so that you can spin up an environment for the next workshop.
 
