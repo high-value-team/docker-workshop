@@ -335,7 +335,7 @@ def install_rancher_host(hostIp, serverIp, port, registrationToken):
 #
 
 # build-server
-instanceId = create_instance('t2.small')
+instanceId = create_instance('t2.medium')
 serverIp = get_public_ip(instanceId)
 add_server_name(instanceId, 'build-server-x')
 wait_for_ssh_available(serverIp)
