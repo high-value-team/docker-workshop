@@ -31,7 +31,9 @@ description:
 
 ## What-is-rancher
 
-Rancher is an orchestration plattform that manages your multi-container Docker applications. Rancher extends the default docker-compose.yml functionality with an additional file called rancher-compose.yml (scaling, healthchecks, loadbalancing). [Read more](rancher-intro.md)
+Rancher is an orchestration plattform that manages your multi-container Docker applications. Rancher extends the default docker-compose.yml functionality with an additional file called rancher-compose.yml (scaling, healthchecks, loadbalancing). 
+
+[Read more](rancher-intro.md)
 
 ## Configure-AWS
 
@@ -120,7 +122,7 @@ docker run configure-drone-ci
 ```
 
 ![drone-jobs](images/drone-jobs.png)
-drone-jobs: Finished pipeline jobs. Some jobs may take some time to finish (e.g. 20minutes)
+drone-jobs: Finished pipeline jobs. Some jobs may take some time to finish (e.g. 22 minutes)
 
 
 ## Closing-Notes
