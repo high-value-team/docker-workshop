@@ -6,7 +6,7 @@ Getting started with Docker - a hands on workshop:
 * [workshop slides](slides.pdf)
 * [workshop examples](examples)
 
-![docker-begriffe](scripts/images/docker-begriffe.png)
+![docker-begriffe2](scripts/images/docker-begriffe2.png)
 
 ## setup Rancher v1.6 on AWS
  
