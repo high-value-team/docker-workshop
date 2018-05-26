@@ -84,7 +84,7 @@ func resourceAccessControlCreate(d *schema.ResourceData, m interface{}) error {
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return fmt.Errorf("Error during making a request: %s", requestUrl)
+		return fmt.Errorf("Error during making a request: %s", err)
 	}
 	log.Printf("[INFO] response status code: %d", resp.StatusCode)
 
@@ -137,7 +137,9 @@ func waitRancherAPIAvailable(requestUrl string) error {
 
 		resp, err := client.Do(req)
 		if err != nil {
-			return fmt.Errorf("Error during making a request: %s", requestUrl)
+			log.Printf("[INFO] Rancher API not available yet, trying again after some time, err: %s", err)
+			time.Sleep(timeout)
+			continue
 		}
 		log.Printf("[INFO] response status code: %d", resp.StatusCode)
 

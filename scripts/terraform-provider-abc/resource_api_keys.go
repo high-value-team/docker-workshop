@@ -76,7 +76,7 @@ func resourceApiKeysCreate(d *schema.ResourceData, m interface{}) error {
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return fmt.Errorf("Error during making a request: %s", requestUrl)
+		return fmt.Errorf("Error during making a request: %s", err)
 	}
 	log.Printf("[INFO] response status code: %d", resp.StatusCode)
 
