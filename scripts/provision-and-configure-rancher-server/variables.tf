@@ -4,3 +4,5 @@ variable "aws_region" {}
 variable "aws_hosted_zone" {}
 variable "aws_ssh_key_name" {}
 variable "aws_security_group" {}
+variable "rancher_username" {}
+variable "rancher_password" {}

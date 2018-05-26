@@ -53,7 +53,7 @@ do
 echo waiting for rancher server API
 sleep 5
 done
-echo rancher server up and running;
+echo rancher server API up and running;
 EOF
   }
 }
@@ -76,4 +76,23 @@ resource "aws_route53_record" "prefix_hvt_zone" {
   type    = "A"
   ttl     = "300"
   records = ["${aws_instance.rancher_server_instance.public_ip}"]
+}
+
+provider "abc" { }
+
+resource "abc_api_keys" "hallo" {
+  rancher_server_url = "http://${aws_instance.rancher_server_instance.public_ip}:8080"
+}
+
+resource "abc_access_control" "hallo" {
+  rancher_server_url = "http://${aws_instance.rancher_server_instance.public_ip}:8080"
+  username = "${var.rancher_username}"
+  password = "${var.rancher_password}"
+}
+
+output "rancher_access_key" {
+  value = "${abc_api_keys.hallo.rancher_access_key}"
+}
+output "rancher_secret_key" {
+  value = "${abc_api_keys.hallo.rancher_secret_key}"
 }
