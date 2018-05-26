@@ -1,0 +1,11 @@
+aws_access_key="TODO"
+aws_secret_key="TODO"
+aws_region="eu-central-1"
+aws_hosted_zone="hvt.zone."
+aws_ssh_key_name="rancher-user"
+aws_security_group="rancher-server"
+rancher_username="florian"
+rancher_password="boehmak"
+
+
+
