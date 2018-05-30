@@ -1,3 +1,9 @@
+provider "aws" {
+	access_key = "${var.aws_access_key}"
+	secret_key = "${var.aws_secret_key}"
+	region     = "${var.aws_region}"
+}
+
 # A look up for rancheros_ami by region
 # source:
 # * https://github.com/rancher/os
@@ -90,9 +96,18 @@ resource "abc_access_control" "hallo" {
   password = "${var.rancher_password}"
 }
 
+output "rancher_url" {
+  value = "http://${aws_instance.rancher_server_instance.public_ip}:8080"
+}
 output "rancher_access_key" {
   value = "${abc_api_keys.hallo.rancher_access_key}"
 }
 output "rancher_secret_key" {
   value = "${abc_api_keys.hallo.rancher_secret_key}"
+}
+output "rancher_server_private_dns" {
+  value = "${aws_instance.rancher_server_instance.private_dns}"
+}
+output "rancher_server_ip" {
+  value = "${aws_instance.rancher_server_instance.public_ip}"
 }

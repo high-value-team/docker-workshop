@@ -1,3 +1,9 @@
+//provider "aws" {
+//	access_key = "${var.aws_access_key}"
+//	secret_key = "${var.aws_secret_key}"
+//	region     = "${var.aws_region}"
+//}
+
 # A look up for rancheros_ami by region
 # source:
 # * https://github.com/rancher/os
@@ -14,8 +20,7 @@ variable "rancheros_amis" {
   type = "map"
 }
 
-# this creates a cloud-init script that registers the server
-# as a rancher server when it starts up
+# this creates a cloud-init script to install rancher host
 data "template_file" "install_rancher_host" {
   template = <<EOF
 #cloud-config
@@ -31,13 +36,13 @@ EOF
 }
 
 
-# AWS ec2 launch instance and install rancher server
+# AWS ec2 launch instance and install rancher host
 # source:
 # * https://www.terraform.io/docs/providers/aws/d/instance.html
 # * https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
 resource "aws_instance" "rancher_host_instance" {
   ami = "${lookup(var.rancheros_amis, var.aws_region)}"
-  instance_type = "t2.small"
+  instance_type = "${var.aws_instance_type}"
   tags = { Name = "rancher-host" }
   security_groups = ["${var.aws_security_group}"]
   user_data = "${data.template_file.install_rancher_host.rendered}"
@@ -46,21 +51,7 @@ resource "aws_instance" "rancher_host_instance" {
     volume_size = "50"
     delete_on_termination = true
   }
-}
-
-
-# Configure the Rancher provider
-provider "rancher" {
-  api_url = "${var.rancher_url}"
-  access_key = "${var.rancher_access_key}"
-  secret_key = "${var.rancher_secret_key}"
-}
-
-# Create a new Rancher environment
-resource "rancher_environment" "default" {
-  name = "default"
-  description = "The staging environment"
-  orchestration = "cattle"
+  count = "${var.number_of_hosts}"
 }
 
 # Create a new Rancher registration token
@@ -77,10 +68,10 @@ resource "rancher_registration_token" "default" {
 }
 
 # Manage an existing Rancher host
-resource rancher_host "foo" {
-  name           = "foo"
-  description    = "The foo node"
+resource rancher_host "silver" {
+  count = "${var.number_of_hosts}"
+  name           = "${var.ranger_host_name}-${count.index}"
+  description    = "The ${var.ranger_host_name}-${count.index} node"
   environment_id = "1a5"
-  hostname       = "${aws_instance.rancher_host_instance.private_dns}"
+  hostname       = "${aws_instance.rancher_host_instance.*.private_dns[count.index]}"
 }
-

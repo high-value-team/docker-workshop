@@ -1,0 +1,6 @@
+rancher_url="http://18.184.241.210:8080"
+rancher_access_key="TODO"
+rancher_secret_key="TODO"
+rancher_server_private_dns="ip-172-31-26-92.eu-central-1.compute.internal"
+rancher_server_ip="18.185.0.142"
+rancher_ssh_key_path="/my/path/to/rancher-user.pem"
