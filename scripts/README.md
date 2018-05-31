@@ -6,20 +6,14 @@ This document will guide you through an automated setup so that you can spin up 
 
 features:
 * provision and configure EC2 instances
-* install rancher 1.6 (rancher server and multiple rancher hosts)
+* install rancher 1.6 (rancher server and rancher host)
+* ~~add multiple rancher hosts~~ (a bug needs to be fixed first)
 * configure DNS entries in Route53 (e.g. hello.example.com, groupbox.example.com)
 
 bonus features:
 * deploy your multi-container Apps to rancher
 * install and configure drone.io CI Server
 
-
-```
-run-setup-golden-server
-run-setup-golden-host
-run-deploy-hvt-stacks
-run-setup-drone
-```
 
 ![rancher-architecture2](images/rancher-architecture2.png)
 description:
@@ -54,35 +48,24 @@ Before we can get up and running with our scripts, we need to go to AWS via the 
 
 ## Execute-Scripts
 
-
 ```
-cd provision-and-configure-servers
-
-# provide aws ssh-key to login into ec2 instance
-cp ~/Downloads/rancher-user.pem id_rsa.pem
-
-# provide usernames, credentials, passwords, security groups, ssh keys
-cp run.example run.sh
-vi run.sh
-
-# build and execute scripts
-docker build --tag provision-and-configure-servers .
-docker run provision-and-configure-servers
-
-# stop container if something goes wrong
-docker ps
-docker stop <container id>
+# creates EC2 instance and installs rancher server
+./run-setup-golden-server
 ```
 
+![aws-provision-done](images/setup-golden-server-done.png)
+setup-golden-server-done: Once the scrip stops, it will print important environment variables are needed for the config files in the following steps
 
-![aws-provision-done](images/aws-provision-done.png)
-aws-provision-done: Once the scrip stops, it will print important environment variables that can be used in the bonus feature steps.
+```
+# install rancher host on previously created EC2 instance
+./run-setup-golden-host
+```
 
-![aws-ec2-instances](images/aws-ec2-instances.png)
-aws-ec2-instances: You should see the newly created instances on your EC2 dashboard. 
+![aws-ec2-instances](images/aws-ec2-instances2.png)
+aws-ec2-instance: You should see the newly created instance on your EC2 dashboard. 
 
 ![aws-route53-hosted-zone-records](images/aws-route53-hosted-zone-records.png)
-aws-route53-hosted-zone-records: The DNS Records will also be modified if the AWS_HOSTED_ZONE_ID has been set in run.sh 
+aws-route53-hosted-zone-records: The DNS Records will also be modified according to your configuration
 
 
 ## Bonus-Features
@@ -92,15 +75,7 @@ aws-route53-hosted-zone-records: The DNS Records will also be modified if the AW
 This script will deploy the preconfigured applications on the rancher plattform.
 
 ```
-cd deploy-hvt-apps
-
-# configure provide credentials, secrets, passwords, usernames, ...
-cp run.example run.sh
-vi run.sh
-
-# build and execute scripts
-docker build --tag deploy-hvt-apps .
-docker run deploy-hvt-apps
+./run-deploy-hvt-stacks
 ```
 
 ![rancher-stacks](images/rancher-stacks.png)
@@ -117,15 +92,7 @@ Setting up the CI build server is also straightforward following these steps:
 [Read more](configure-drone.md)
 
 ```
-cd configure-drone-ci
-
-# configure provide credentials, secrets, passwords, usernames, ...
-cp run.example run.sh
-vi run.sh
-
-# build and execute scripts
-docker build --tag configure-drone-ci .
-docker run configure-drone-ci
+./run-setup-drone
 ```
 
 ![drone-jobs](images/drone-jobs.png)
