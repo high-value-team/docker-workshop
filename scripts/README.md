@@ -54,7 +54,7 @@ Before we can get up and running with our scripts, we need to go to AWS via the 
 ```
 
 ![aws-provision-done](images/setup-golden-server-done.png)
-setup-golden-server-done: Once the scrip stops, it will print important environment variables are needed for the config files in the following steps
+setup-golden-server-done: Once the scrip stops, it will print important environment variables that are needed for the config files in the following steps
 
 ```
 # install rancher host on previously created EC2 instance
@@ -141,3 +141,36 @@ drone:
 rancher:
 * https://rancher.com/docs/rancher/v1.6/en/cli/commands/
 * https://rancher.com/docs/rancher/v1.6/en/api/v1/
+
+Terraform lessons learned:
+* https://medium.com/@hbarcelos/things-i-wish-i-knew-about-terraform-before-jumping-into-it-43ee92a9dd65
+* https://medium.com/@hbarcelos/how-i-learnt-to-love-and-hate-terraform-in-the-past-few-weeks-db085d012882
+* https://heapanalytics.com/blog/engineering/terraform-gotchas
+
+gruntwork - AWS, DevOps Company
+* https://www.gruntwork.io/reference-architecture/
+* [A Comprehensive Guide to Terraform](https://blog.gruntwork.io/a-comprehensive-guide-to-terraform-b3d32832baca)
+* [terraform and packer example](https://medium.com/@I_M_Harsh/build-and-deploy-using-jenkins-packer-and-terraform-40b2aafedaec)
+
+rancher and terraform
+* https://rancher.com/continuous-delivery-of-everything/
+* https://rancher.com/managing-container-clusters-terraform-rancher/
+* https://github.com/pelotech/example-shared-infrastructure
+* https://www.terraform.io/docs/providers/rancher/index.html
+
+terraform-modules by rancher
+* https://rancher.com/terraforming-rancher-deployments-digital-ocean/
+* https://rancher.com/announcing-new-terraform-module-gce/
+* https://github.com/rancher/terraform-modules
+
+immutable infrastructure
+* https://rancher.com/welcome-era-immutable-infrastructure/
+
+terraform rancher setup - simple
+* https://rancher.com/managing-container-clusters-terraform-rancher/
+* https://github.com/greensheep/terraform-aws-rancher-server
+* https://medium.com/localz-engineering/set-forget-deployments-rancher-terraform-active-proxy-ssl-3bd79ded4306
+
+terraform rancher setup - extended
+* https://thisendout.com/2016/05/04/deploying-rancher-with-ha-using-rancheros-aws-terraform-letsencrypt/
+* http://www.tastycidr.net/rancher-creating-a-highly-available-container-orchestration-cluster-on-ec2/
