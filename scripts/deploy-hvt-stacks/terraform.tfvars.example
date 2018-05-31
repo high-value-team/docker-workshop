@@ -1,0 +1,6 @@
+rancher_url="http://35.157.59.21:8080"
+rancher_access_key="B37E21A7643076820524"
+rancher_secret_key="YMsCJgsMypKyuuxw2Vokt61LuUHYKtroaKxYsoBV"
+rancher_environment_id="1a5"
+drone_github_client="db9ec8d1f6213a12ea"
+drone_github_secret="fa6373c67be6eb3d1417aaa129db9109e8db9b0"
