@@ -45,7 +45,7 @@ EOT
 fi
 
 # Build the two images tagged with the version number
-./build.sh "$VERSION"
+build.sh "$VERSION"
 
 # Verify that they were built correctly.
 echo "-- Testing $VERSION Images --"
@@ -67,7 +67,7 @@ fi
 echo ""
 
 # Update the latest, light and full tags to point to the images we just built.
-./tag.sh "$VERSION"
+tag.sh "$VERSION"
 
 # Last chance to bail out
 echo "-- Prepare to Push --"
@@ -84,7 +84,7 @@ fi
 echo ""
 
 # Actually upload the images
-./push.sh "$VERSION"
+push.sh "$VERSION"
 
 echo ""
 echo "-- All done! --"
