@@ -1,9 +1,3 @@
-//provider "aws" {
-//	access_key = "${var.aws_access_key}"
-//	secret_key = "${var.aws_secret_key}"
-//	region     = "${var.aws_region}"
-//}
-
 # A look up for rancheros_ami by region
 # source:
 # * https://github.com/rancher/os
@@ -31,10 +25,15 @@ write_files:
     content: |
       #!/bin/bash
       wait-for-docker
-      ${rancher_registration_token.default.command}
+      $${docker_command}
 EOF
-}
 
+  vars {
+    # both lead to error: https://github.com/rancher/rancher/issues/10580
+    #docker_command = "${rancher_registration_token.default.command}"
+    docker_command = "docker run --rm --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/rancher:/var/lib/rancher rancher/agent:v1.2.10 ${rancher_registration_token.default.registration_url}"
+  }
+}
 
 # AWS ec2 launch instance and install rancher host
 # source:
@@ -43,7 +42,7 @@ EOF
 resource "aws_instance" "rancher_host_instance" {
   ami = "${lookup(var.rancheros_amis, var.aws_region)}"
   instance_type = "${var.aws_instance_type}"
-  tags = { Name = "rancher-host" }
+  tags = { Name = "rancher-host-${count.index}}" }
   security_groups = ["${var.aws_security_group}"]
   user_data = "${data.template_file.install_rancher_host.rendered}"
   key_name = "${var.aws_ssh_key_name}"
@@ -59,12 +58,6 @@ resource "rancher_registration_token" "default" {
   name           = "default_token"
   description    = "Registration token for the default environment"
   environment_id = "1a5"
-
-  host_labels    {
-    orchestration = "true",
-    etcd          = "true",
-    compute       = "true"
-  }
 }
 
 # Manage an existing Rancher host

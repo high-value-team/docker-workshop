@@ -13,7 +13,7 @@ provider "rancher" {
 module "silver" {
   source = "./setup-silver-host"
 
-  number_of_hosts    = "3"
+  number_of_hosts    = "1"
   ranger_host_name   = "silver"
   aws_instance_type  = "t2.small"
   aws_region         = "${var.aws_region}"
