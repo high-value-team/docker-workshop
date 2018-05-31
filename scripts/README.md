@@ -14,6 +14,13 @@ bonus features:
 * install and configure drone.io CI Server
 
 
+```
+run-setup-golden-server
+run-setup-golden-host
+run-deploy-hvt-stacks
+run-setup-drone
+```
+
 ![rancher-architecture2](images/rancher-architecture2.png)
 description:
 

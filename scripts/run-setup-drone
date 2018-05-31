@@ -1,0 +1,59 @@
+#!/bin/bash
+
+
+SOURCE_DIRECTORY=setup-drone
+
+
+#
+# config
+#
+
+echo "check if config variables are set:"
+if [ ! -f $(pwd)/$SOURCE_DIRECTORY/config.env ]; then
+    echo "config.env not found! Please use config.env.example as a template to create your custom config.env"
+    exit 1
+fi
+
+set -o allexport
+source $(pwd)/$SOURCE_DIRECTORY/config.env
+set +o allexport
+
+
+#
+# add
+#
+
+# show console output
+set -x
+
+echo
+export REPOSITORY=high-value-team/hello
+drone repo add $REPOSITORY
+drone secret add -repository $REPOSITORY -name docker_username -value $DOCKER_USERNAME
+drone secret add -repository $REPOSITORY -name docker_password -value $DOCKER_PASSWORD
+drone secret add -repository $REPOSITORY -name rancher_access_key -value $RANCHER_ACCESS_KEY
+drone secret add -repository $REPOSITORY -name rancher_secret_key -value $RANCHER_SECRET_KEY
+
+echo
+export REPOSITORY=high-value-team/featureforecast
+drone repo add $REPOSITORY
+drone secret add -repository $REPOSITORY -name docker_username -value $DOCKER_USERNAME
+drone secret add -repository $REPOSITORY -name docker_password -value $DOCKER_PASSWORD
+drone secret add -repository $REPOSITORY -name rancher_access_key -value $RANCHER_ACCESS_KEY
+drone secret add -repository $REPOSITORY -name rancher_secret_key -value $RANCHER_SECRET_KEY
+
+echo
+export REPOSITORY=high-value-team/totalorder
+drone repo add $REPOSITORY
+drone secret add -repository $REPOSITORY -name docker_username -value $DOCKER_USERNAME
+drone secret add -repository $REPOSITORY -name docker_password -value $DOCKER_PASSWORD
+drone secret add -repository $REPOSITORY -name rancher_access_key -value $RANCHER_ACCESS_KEY
+drone secret add -repository $REPOSITORY -name rancher_secret_key -value $RANCHER_SECRET_KEY
+
+echo
+export REPOSITORY=high-value-team/groupbox
+drone repo add $REPOSITORY
+drone secret add -repository $REPOSITORY -name docker_username -value $DOCKER_USERNAME
+drone secret add -repository $REPOSITORY -name docker_password -value $DOCKER_PASSWORD
+drone secret add -repository $REPOSITORY -name rancher_access_key -value $RANCHER_ACCESS_KEY
+drone secret add -repository $REPOSITORY -name rancher_secret_key -value $RANCHER_SECRET_KEY

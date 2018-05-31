@@ -1,0 +1,36 @@
+#!/bin/bash
+
+SOURCE_DIRECTORY=setup-silver-hosts
+
+echo "check if config variables are set:"
+if [ ! -f $(pwd)/$SOURCE_DIRECTORY/terraform.tfvars ]; then
+    echo "terraform.tfvars not found! Please use terraform.tfvars.example as a template to create terraform.tfvars"
+    exit 1
+fi
+
+# make docker run output visible
+set -x
+
+docker run -i --volume $(pwd)/$SOURCE_DIRECTORY:/data hvt1/docker-workshop-scripts bash << 'EOF'
+
+
+echo cleanup terraform providers
+rm -rf /data/.terraform
+mkdir -p /data/.terraform/plugins/linux_amd64
+cp /go/bin/terraform-provider-* /data/.terraform/plugins/linux_amd64/
+ls /data/.terraform/plugins/linux_amd64/
+
+echo
+echo cleanup terraform state
+rm -rf /data/terraform.tfstate*
+
+echo
+echo terraform: init, plan, apply
+cd /data
+terraform init
+terraform plan
+echo yes | terraform apply
+
+exit
+
+EOF
