@@ -75,7 +75,7 @@ aws-route53-hosted-zone-records: The DNS Records will also be modified according
 This script will deploy the preconfigured applications on the rancher plattform.
 
 ```
-./run-deploy-hvt-stacks
+./run-setup-hvt-stacks
 ```
 
 ![rancher-stacks](images/rancher-stacks.png)

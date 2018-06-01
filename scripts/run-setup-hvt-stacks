@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SOURCE_DIRECTORY=deploy-hvt-stacks
+SOURCE_DIRECTORY=setup-hvt-stacks
 
 echo "check if config variables are set:"
 if [ ! -f $(pwd)/$SOURCE_DIRECTORY/terraform.tfvars ]; then
